@@ -1,0 +1,8 @@
+CREATE TABLE tarefas (
+    id BIGSERIAL PRIMARY KEY,
+    titulo VARCHAR(100) NOT NULL,
+    descricao VARCHAR(500),
+    status VARCHAR(50) NOT NULL DEFAULT 'pending',
+    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    atualizado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
