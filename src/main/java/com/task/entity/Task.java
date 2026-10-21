@@ -1,8 +1,8 @@
 package com.task.entity;
 
+import com.task.enums.StatusTask;
 import jakarta.persistence.*;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -11,14 +11,15 @@ public class Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    BigDecimal id;
-
+    private Long id;
 
     private String titulo;
 
     private String descricao;
 
-    private String status;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private StatusTask status =  StatusTask.PENDENTE;
 
     @Column(name = "criado_em")
     private LocalDateTime criadoEm;
@@ -36,11 +37,11 @@ public class Task {
         atualizadoEm = LocalDateTime.now();
     }
 
-    public BigDecimal getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(BigDecimal id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -60,12 +61,13 @@ public class Task {
         this.descricao = descricao;
     }
 
-    public String getStatus() {
+    public StatusTask getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public StatusTask setStatus(StatusTask status) {
         this.status = status;
+        return status;
     }
 
     public LocalDateTime getCriadoEm() {

@@ -6,7 +6,7 @@ public record TaskResponse(
         Long id,
         String titulo,
         String descricao,
-        String status
+        com.task.enums.StatusTask status
 ) {
 
     public static TaskResponse fromEntity(Task task) {
