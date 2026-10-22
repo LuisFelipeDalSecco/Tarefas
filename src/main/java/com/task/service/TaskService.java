@@ -3,10 +3,14 @@ package com.task.service;
 import com.task.dto.TaskRequest;
 import com.task.dto.TaskResponse;
 import com.task.entity.Task;
+import com.task.enums.StatusTask;
 import com.task.exception.RegrasException;
 import com.task.repository.TaskRepository;
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -14,7 +18,7 @@ import java.util.List;
 @Service
 public class TaskService {
 
-    public final TaskRepository taskRepository;
+    private final TaskRepository taskRepository;
 
     public TaskService(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
@@ -45,6 +49,19 @@ public class TaskService {
         return TaskResponse.fromEntity(taskAtualizada);
     }
 
+    @Transactional
+    public TaskResponse atualizarStatusTask(Long id, StatusTask novoStatus) {
+
+        Task task = taskRepository.findById(id)
+                .orElseThrow(() ->
+                        new RegrasException("Tarefa não encontrada com o ID: " + id)
+                );
+
+        task.setStatus(novoStatus);
+        Task taskAtualizada = taskRepository.save(task);
+        return TaskResponse.fromEntity(taskAtualizada);
+    }
+
     public TaskResponse buscarTaskPorId(Long id) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new RegrasException("Tarefa não encontrada com o ID: " + id));
@@ -65,4 +82,5 @@ public class TaskService {
         taskRepository.delete(task);
         return TaskResponse.fromEntity(task);
     }
+
 }

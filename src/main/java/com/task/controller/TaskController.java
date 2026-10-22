@@ -2,6 +2,7 @@ package com.task.controller;
 
 import com.task.dto.TaskRequest;
 import com.task.dto.TaskResponse;
+import com.task.dto.TaskStatusRequest;
 import com.task.service.TaskService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -40,6 +41,14 @@ public class TaskController {
     @PutMapping("/{id}")
     public TaskResponse updateTask(@PathVariable Long id, @Valid @RequestBody TaskRequest taskRequest) {
         return taskService.atualizarTask(id, taskRequest);
+    }
+
+    @PatchMapping("/{id}/status")
+    public TaskResponse updateTaskStatus(
+            @PathVariable Long id,
+            @Valid @RequestBody TaskStatusRequest request) {
+
+        return taskService.atualizarStatusTask(id, request.status());
     }
 
     @DeleteMapping("/{id}")

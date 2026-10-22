@@ -2,8 +2,10 @@ package com.task.dto;
 
 import com.task.entity.Task;
 import com.task.enums.StatusTask;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import org.springframework.web.bind.annotation.RequestBody;
 
 public record TaskRequest(
 
@@ -28,7 +30,7 @@ public record TaskRequest(
         task.setDescricao(descricao);
 
         if (status != null) {
-            task.setStatus((status));
+            task.setStatus(status);
         }
     }
 }
